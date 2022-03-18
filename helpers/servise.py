@@ -1,24 +1,20 @@
 import requests
 
-from model.user_model import User
-
 
 class ApiService(object):
 
-    def __init__(self):
-        pass
+    def __init__(self, base_url: str = 'https://petstore.swagger.io/v2'):
+        self.base_url: str = base_url
 
 class UserApiService(ApiService):
 
     def __init__(self):
         super().__init__()
-        pass 
+        self.base_url = self.base_url + '/user'
+
     
-    def create_user(self, user: dict | User):
-        headers = {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
-        if type(user) == User:
-            user = user.to_dict()
-        return requests.post('https://petstore.swagger.io/v2/user', headers=headers, json=user).json()
+    def create_user(self, user: dict):
+        return requests.post(self.base_url, json=user).json()
+    
+    def get_user_by_username(self, username: str) -> dict:
+        return requests.get(self.base_url + f'/{username}').json()

@@ -3,4 +3,4 @@ import pytest
 
 @pytest.fixture(scope="function")
 def new_user() -> User:
-    return User().generate()
+    return User().create()
