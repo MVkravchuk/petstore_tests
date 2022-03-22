@@ -1,5 +1,7 @@
 import re
 
+import allure
+
 from helpers.servise import UserApiService
 from model._base_model import BaseModel
 from helpers.data_generator import fake
@@ -17,6 +19,7 @@ class User(BaseModel):
         self.phone: str = kwargs.get('phone')
         self.userStatus: int = kwargs.get('user_stasus')
 
+    @allure.step("Generate new user data")
     def generate(self, **kwargs):
         self.id: int = kwargs.get('id', fake.pyint())
         self.username: str = kwargs.get('username', fake.word())
@@ -28,10 +31,12 @@ class User(BaseModel):
         self.userStatus: int = kwargs.get('user_stasus', fake.pyint())
         return self
 
+    @allure.step('Generate and add new user to database')
     def create(self, **kwargs):
         user = self.generate(kwargs=kwargs)
         UserApiService().create_user(user.to_dict())
         return user
 
+    @allure.step('Delete user from database')
     def delete(self):
         return UserApiService().delete_user(self.username)
