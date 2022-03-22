@@ -1,4 +1,3 @@
-import requests
 from hamcrest import assert_that, has_entries, equal_to
 
 from helpers.servise import UserApiService
