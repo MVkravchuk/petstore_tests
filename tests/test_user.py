@@ -1,3 +1,4 @@
+import pytest
 from hamcrest import assert_that, has_entries, equal_to
 
 from helpers.servise import UserApiService
@@ -25,3 +26,17 @@ class TestReadUser:
         response = UserApiService().get_user_by_username(new_user.username)
         for key, value in new_user.to_dict().items():
             assert_that(response, has_entries(key, equal_to(value)))
+
+
+class TestDeleteUser:
+
+    @pytest.mark.parametrize(
+        "user, result",
+        [
+            ('failed_test', 200),
+            ("passed_test", 404),
+        ],
+    )
+    def test_can_delete_user__by_user_name(self, user, result):
+        response = UserApiService().delete_user(user)
+        assert response.status_code == result

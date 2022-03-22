@@ -18,3 +18,6 @@ class UserApiService(ApiService):
     
     def get_user_by_username(self, username: str) -> dict:
         return requests.get(self.base_url + f'/{username}').json()
+
+    def delete_user(self, username:str):
+        return requests.delete(self.base_url + f'/{username}')

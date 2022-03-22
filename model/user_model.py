@@ -32,3 +32,6 @@ class User(BaseModel):
         user = self.generate(kwargs=kwargs)
         UserApiService().create_user(user.to_dict())
         return user
+
+    def delete(self):
+        return UserApiService().delete_user(self.username)
