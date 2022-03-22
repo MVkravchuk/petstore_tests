@@ -1,0 +1,5 @@
+allure-pytest==2.9.45
+Faker==13.3.2
+PyHamcrest==2.0.3
+pytest==7.1.0
+requests==2.27.1
