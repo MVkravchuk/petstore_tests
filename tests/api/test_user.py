@@ -1,6 +1,7 @@
 import allure
 import pytest
 from hamcrest import assert_that, has_entries, equal_to
+from pytest_lazyfixture import lazy_fixture
 
 from helpers.servise import UserApiService
 from model.user_model import User
@@ -8,6 +9,7 @@ from model.user_model import User
 
 @allure.suite('CRUD with users')
 @allure.story('Add new user')
+@allure.label('API')
 class TestCreateUser:
 
     @allure.title('Can create new unique user')
@@ -32,6 +34,7 @@ class TestCreateUser:
 
 @allure.suite('CRUD with users')
 @allure.story('Read user info')
+@allure.label('API')
 class TestReadUser:
 
     @allure.title('Can read user info from database by username')
@@ -45,14 +48,15 @@ class TestReadUser:
 
 @allure.suite('CRUD with users')
 @allure.story('Delete user')
+@allure.label('API')
 class TestDeleteUser:
 
     @allure.title('Can delete user by username (parametrize test)')
     @pytest.mark.parametrize(
         "user, result",
         [
-            ('failed_test', 200),
-            ("passed_test", 404),
+            (lazy_fixture('new_user'), 200),
+            (lazy_fixture('fake_user'), 404),
         ],
     )
     def test_can_delete_user__by_user_name(self, user, result):
