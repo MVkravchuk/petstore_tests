@@ -7,13 +7,13 @@ import allure
 from pages.main_page import MainPage
 
 
-@allure.step('Create new user')
+@allure.step("Create new user")
 @pytest.fixture(scope="function")
 def new_user() -> User:
     return User().create()
 
 
-@allure.step('Generate fake user')
+@allure.step("Generate fake user")
 @pytest.fixture(scope="function")
 def fake_user() -> User:
     return User().generate()
